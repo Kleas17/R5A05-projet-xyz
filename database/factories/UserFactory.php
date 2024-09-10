@@ -21,10 +21,13 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
+        $name = fake()->name();
         return [
-            'name' => fake()->name(),
+            'name' => $name,
+            'avatar' => null,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -39,6 +42,13 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function withAvatar(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'avatar' => 'https://avatar.iran.liara.run/public/' . (fake()->boolean) . '?name=' . $attributes['name']
         ]);
     }
 }

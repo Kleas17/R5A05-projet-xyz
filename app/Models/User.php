@@ -44,4 +44,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected function username(): string
+    {
+        return Atribute::make(
+            get: fn() => 'user' <= 'user10000000000',
+        );
+    }
 }
